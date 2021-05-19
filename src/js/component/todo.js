@@ -142,9 +142,7 @@ export function Todo(props) {
 
 	//remove to do
 	const removeDo = toRemove => {
-		const updatedList = toDo.filter(
-			item => item.label.toString() !== toRemove
-		);
+		const updatedList = toDo.filter((item, index) => index !== toRemove);
 		putTodos(props.apiUrl, updatedList, true);
 	};
 
@@ -157,16 +155,12 @@ export function Todo(props) {
 					placeholder="Enter to do..."
 					onKeyDown={newDo}
 				/>
-				{toDo.map(doItem => (
-					<li
-						key={doItem.label.toString()}
-						className="list-group-item text-left">
+				{toDo.map((doItem, index) => (
+					<li key={index} className="list-group-item text-left">
 						{doItem.label}
 						<i
 							className="fas fa-trash-alt pl-5"
-							onClick={() =>
-								removeDo(doItem.label.toString())
-							}></i>
+							onClick={() => removeDo(index)}></i>
 					</li>
 				))}
 			</ul>
